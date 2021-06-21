@@ -1,0 +1,133 @@
+import time
+from win32com.client import Dispatch
+
+
+def sp(s):
+    speaker_number = 1
+    spk = Dispatch("SAPI.SpVoice")
+    vcs = spk.GetVoices()
+    spk.Voice
+    spk.SetVoice(vcs.Item(speaker_number))
+    spk.Speak(s)
+
+
+def book():
+    book_list = ['Lord of the Rings', 'Ghost the Shell', 'The Invincible', 'The Witcher', 'Harry Potter', 'The Batman']
+    f = open('book.txt', 'w')
+    for i in book_list:
+        f = open('book.txt', 'a')
+        f.write(f'{i}\n')
+
+
+def libr():
+    print(".....................................Welcome to NAANI library.....................................\n")
+    sp(f'Welcome to NAANI library')
+
+
+def libb():
+    time.sleep(2)
+    print("BOOK SELF:\n")
+    f = open("book.txt", 'r')
+    a = f.readlines()
+    k = 1
+    for i in a:
+        print(f"{k}.{i}")
+        k += 1
+    print("\n")
+
+
+def br(n, nm):
+    n = n-1
+    f = open("book.txt", 'r')
+    a = f.readlines()
+    b = a[n]
+    brd = open("br.txt", 'r')
+    if b in brd.readlines():
+        print(f"book :{b}is not available")
+        sp('not available')
+    else:
+        print(f"You have borrowed the book:\n{b}")
+        sp(f"You have borrowed the book:\n{b}")
+        br1 = open("br1.txt", 'a')
+        br1.write(f'{nm} - {b}')
+        brd = open("br.txt", 'a')
+        brd.write(b)
+    f = open("book.txt", 'r')
+    a = f.readlines()
+    del a[n]
+    f = open("book.txt", 'w')
+    f.writelines(a)
+    sp("Thank You")
+
+
+def brb():
+    print("Borrowed Books:\n")
+    f = open("br1.txt", 'r')
+    print(f.read())
+
+
+def re(n, nme):
+    l1 = f"{nme} - {n}"
+    f1 = open('br1.txt', 'r')
+    a = f1.readlines()
+    ab = len(a)
+    for i in range(ab):
+        if l1 in a[i]:
+            f = open("book.txt", 'a')
+            f.writelines(f"{n}\n")
+            sp("Thank You")
+            del a[i]
+            f1 = open("br1.txt", 'w')
+            f1.writelines(a)
+            break
+    else:
+        print("This is not the book you borrowed")
+        sp("This is not the book you borrowed")
+
+
+def don(n):
+    f = open("book.txt", 'r')
+    a = f.readlines()
+    if str(n) in a:
+        print("Already available in library")
+        sp(" this book is Already available in library")
+        sp("Thank you")
+    else:
+        f = open("book.txt", 'a')
+        f.write(f"{n}\n")
+        sp(f"Thank you for donating the book : {n}")
+
+
+libr()
+print("Enter Your Name: ")
+sp("Please Enter Your Name")
+usename = input()
+sp(f"Hello {usename}")
+print("Press 'B' to borrow a book \nPress 'D' to donate\nPress 'R' to return book\n")
+sp("For borrow a book press b: for donating press d: for returning press r:")
+af = input().upper()
+if af == 'B':
+    libb()
+    br(int(input("For borrowing a book select the number of book:- ")), usename)
+elif af == 'R':
+    re(input("Enter the name book: "), usename)
+elif af == 'D':
+    don(input("Enter the name book: "))
+
+while True:
+    c = input("Press 'R' to restart the library \nPress 'E' to exit the library\n").upper()
+    if c == "R":
+        sp("Restarting")
+        time.sleep(3)
+        af = input("Press 'B' to borrow a book \nPress 'D' to donate\nPress 'R' to return book\n").upper()
+        if af == 'B':
+            time.sleep(2)
+            libb()
+            br(int(input("For borrowing a book select the number of book:- ")), usename)
+        elif af == 'R':
+            re(input("Enter the name of the book: "), usename)
+        elif af == 'D':
+            don(input("Enter the name book: "))
+    if c == "E":
+        sp("Exit")
+        break
