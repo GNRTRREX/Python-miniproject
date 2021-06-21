@@ -12,7 +12,7 @@ def sp(s):
 
 
 def book():
-    book_list = ['Lord of the Rings', 'Ghost the Shell', 'The Invincible', 'The Witcher', 'Harry Potter', 'The Batman']
+    book_list = ['Lord of the Rings', 'Ghost in the Shell', 'The Invincible', 'The Witcher', 'Harry Potter', 'The Batman']
     f = open('book.txt', 'w')
     for i in book_list:
         f = open('book.txt', 'a')
